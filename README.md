@@ -37,9 +37,23 @@ The CYD layout (landscape):
 +--------------------------------------------------------------+
 ```
 
+<p align="center">
+  <img src="docs/images/cyd.jpg" width="480"
+       alt="The resistive CYD build in a 3D-printed handlebar mount, showing 41% battery, 52.7 V, 0 km/h, the trip column and the ECO profile">
+  <br>
+  <em>The <code>cyd_resistive</code> build (ESP32-2432S028R).</em>
+</p>
+
 The C6 and AMOLED boards use the same zones (battery strip, speed, power meter, profile
 band) but one full-width telemetry zone instead of a side column - see
 [Using it](#using-it). The AMOLED's layout is the C6 one scaled up about 1.5x.
+
+<p align="center">
+  <img src="docs/images/c6-lcd19.jpg" width="360"
+       alt="The Waveshare ESP32-C6-LCD-1.9 build on an e-bike, showing 52.7 V, 0.0 km/h, 0 W and the SPORT profile">
+  <br>
+  <em>The <code>c6_lcd19</code> build (Waveshare ESP32-C6-LCD-1.9).</em>
+</p>
 
 ---
 
