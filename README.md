@@ -13,8 +13,8 @@ Waveshare ESP32-C6 touch boards and a Waveshare ESP32-S3 AMOLED board:
 
 | Board | Build environment | Display | Touch |
 |---|---|---|---|
-| ESP32-2432S028**R** (by far the most common CYD) | `cyd_resistive` | ILI9341 240x320 (TFT_eSPI) | XPT2046, resistive, SPI |
-| Capacitive members of the same Sunton family | `cyd_capacitive` (default) | ILI9341 240x320 (TFT_eSPI) | CST816/CST820 or GT911, I2C |
+| ESP32-2432S028**R** (by far the most common CYD) | `cyd_resistive` (default) | ILI9341 240x320 (TFT_eSPI) | XPT2046, resistive, SPI |
+| Capacitive members of the same Sunton family | `cyd_capacitive` | ILI9341 240x320 (TFT_eSPI) | CST816/CST820 or GT911, I2C |
 | Waveshare ESP32-C6-LCD-1.9 (touch variant) | `c6_lcd19` | ST7789V2 170x320 (Arduino_GFX) | CST8xx, I2C |
 | Waveshare ESP32-C6-Touch-LCD-1.47 | `c6_lcd147` | JD9853 172x320 (Arduino_GFX) | AXS5106L, I2C |
 | Waveshare ESP32-S3-Touch-AMOLED-1.64 | `s3_amoled164` | CO5300 AMOLED 280x456 (Arduino_GFX) | FT3168, I2C |
@@ -75,9 +75,10 @@ The 2.8" CYD ships in two variants and they use completely different touch contr
 | `ESP32-2432S028R` (by far the most common) | resistive | XPT2046 on SPI | `cyd_resistive` |
 | Capacitive members of the same Sunton family | capacitive | CST816/CST820 (or GT911) on I2C | `cyd_capacitive` |
 
-`cyd_capacitive` is the default environment - but if you bought a board labelled
-**2432S028R**, it is resistive and you want `cyd_resistive`. Flashing the wrong one just
-means touch does nothing; the display still works, so it is a cheap thing to test.
+`cyd_resistive` is the default environment, since a board labelled **2432S028R** is
+resistive and that's what most shops ship. If yours has a capacitive panel, build
+`cyd_capacitive` instead. Flashing the wrong one just means touch does nothing; the
+display still works, so it is a cheap thing to test.
 
 The capacitive driver auto-detects CST816/CST820 at `0x15` and GT911 at `0x5D`/`0x14`
 and logs which one answered. If none answers, check `TOUCH_SDA_PIN` / `TOUCH_SCL_PIN`
@@ -224,8 +225,8 @@ their own, see below - but on any other firmware, re-verify against that version
    (`.vscode/extensions.json` also recommends the pioarduino IDE extension and an ESP
    exception decoder.)
 2. Open this folder.
-3. Pick the environment (`cyd_capacitive`, `cyd_resistive`, `c6_lcd19` for the
-   Waveshare ESP32-C6-LCD-1.9, `c6_lcd147` for the ESP32-C6-Touch-LCD-1.47, or
+3. Pick the environment (`cyd_resistive` (the default), `cyd_capacitive`, `c6_lcd19` for
+   the Waveshare ESP32-C6-LCD-1.9, `c6_lcd147` for the ESP32-C6-Touch-LCD-1.47, or
    `s3_amoled164` for the ESP32-S3-Touch-AMOLED-1.64) in the PlatformIO toolbar - with
    `_uart` on the end for the UART link.
 4. Upload.
