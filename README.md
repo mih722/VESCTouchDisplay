@@ -22,6 +22,13 @@ Waveshare ESP32-C6 touch boards and a Waveshare ESP32-S3 AMOLED board:
 Each environment also has a `_uart` twin (`cyd_resistive_uart`, `c6_lcd19_uart`, ...) that
 talks to the VESC over UART instead of CAN - see [Wiring](#wiring).
 
+> **The UART builds have not been tested on hardware.** The dash first talked to the VESC
+> over UART, but I needed the VESC's UART pins for a pedal-assist sensor, so I moved it to
+> CAN. A lot changed after that, and UART support was only recently added back (by Claude
+> Opus) so that every board can use either link. The CAN builds are the ones I actually
+> ride with. If you try UART, treat it as experimental and test with the wheel off the
+> ground first.
+
 The CYD layout (landscape):
 
 ```
