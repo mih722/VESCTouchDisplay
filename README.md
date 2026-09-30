@@ -4,6 +4,10 @@ An e-bike dashboard that talks to a VESC over **CAN bus** (via a TJA1050 transce
 **UART** (straight to its COMM port) **and** simultaneously acts as a **VESC Tool BLE
 bridge**, so your phone still connects to the controller with the display in the loop.
 
+> **Use at your own risk.** This is hobby firmware for a vehicle you ride, written with
+> substantial help from AI. It comes with no warranty. Read the
+> [disclaimer](#disclaimer-use-at-your-own-risk) before you put it on a bike.
+
 It started on the **ESP32-2432S028** ("Cheap Yellow Display") and now also builds for two
 Waveshare ESP32-C6 touch boards and a Waveshare ESP32-S3 AMOLED board:
 
@@ -686,3 +690,56 @@ This changes how a vehicle you ride behaves. Test profile switching with the whe
 the ground before you trust it in traffic, and be aware that a long-press while riding is
 a distraction - the 1.4-second hold exists precisely so it cannot happen by accident on a
 bump.
+
+---
+
+## AI disclaimer
+
+Much of this project's code and documentation was written with the help of AI coding
+assistants, including Anthropic's Claude. A person directed and reviewed the work,
+but AI-generated code can contain subtle mistakes that look plausible, and not every line
+has been checked by hand. Keep that in mind when reading the source, especially the parts
+that touch motor limits, the VESC's configuration or its flash.
+
+## Disclaimer: use at your own risk
+
+This software is provided **as is**, without warranty of any kind. You use it entirely at
+your own risk.
+
+* **It controls a vehicle.** Rider profiles change current, speed and power limits and the
+  rider-input mode on a live motor controller. A bug, a misconfiguration, a bad wire or a
+  dropped connection can make the bike behave unexpectedly, and that can cause a crash,
+  injury or death.
+* **It writes to your VESC.** The long-press save writes configuration to the VESC's flash
+  and can overwrite settings you made in VESC Tool. Back up your motor and app
+  configuration before you use it.
+* **It involves batteries and wiring.** E-bike packs can deliver very large currents. Wiring
+  mistakes can destroy the controller or the display and can start a fire.
+* **It is not a certified product.** It has not been safety-tested and is not affiliated
+  with or endorsed by the VESC project, Benjamin Vedder, or any board manufacturer.
+* **Local laws are your responsibility.** Profiles can raise speed and power limits past
+  what your local e-bike rules allow. You are responsible for staying legal on public
+  roads.
+
+The authors and contributors are not liable for any damage, injury, loss or legal
+consequences that come from using, building or modifying this project. See sections 15
+and 16 of the [license](LICENSE) for the formal terms.
+
+---
+
+## License
+
+Copyright (C) 2026 MIH722.
+
+This program is free software: you can redistribute it and/or modify it under the terms of
+the GNU General Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version. See [LICENSE](LICENSE)
+for the full text.
+
+The GPL was chosen because the VESC protocol code this project builds on
+([VescUart](https://github.com/SolidGeek/VescUart),
+[ComEVesc](https://github.com/TecnicoFuelCell/ComEVesc),
+[vesc_express](https://github.com/vedderb/vesc_express),
+[bldc](https://github.com/vedderb/bldc)) is itself GPL-licensed. Third-party libraries pulled
+in at build time (TFT_eSPI, Arduino_GFX, NimBLE-Arduino, ESP-IDF and so on) keep their
+own licenses.
