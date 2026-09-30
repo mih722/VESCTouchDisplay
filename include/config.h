@@ -28,7 +28,9 @@
 //  CAN is the better link when the VESC has a CAN port: telemetry arrives by
 //  broadcast, phone and dash traffic are kept apart by id, and every profile
 //  feature works. UART works with any VESC and needs no transceiver, but
-//  gives up PAS - its profiles can only turn the throttle on or off. See 1b.
+//  gives up PAS - its profiles still apply every limit (current, brake,
+//  speed, watts), but their app_mode can only turn the throttle on or off.
+//  See 1b.
 // ---------------------------------------------------------------------------
 #ifndef VESC_LINK_UART
 #define VESC_LINK_UART 0
@@ -343,8 +345,8 @@ static constexpr RiderProfile RIDER_PROFILES[PROFILE_COUNT] = {
     {  "SPORT+", 0xF800,  1.00f, 1.00f, 0.0f,   0.0f,    APP_MODE_ADC_PAS },
 };
 #else
-// UART: throttle on (APP_MODE_ADC) or off (APP_MODE_NONE) only - no PAS over
-// UART, see section 1b. The dash turns these into "ADC and UART" / "UART" so
+// UART: the same limits as CAN, but app_mode is throttle on (APP_MODE_ADC) or
+// off (APP_MODE_NONE) only - no PAS over UART, see section 1b. The dash turns these into "ADC and UART" / "UART" so
 // the link survives the switch.
 static constexpr RiderProfile RIDER_PROFILES[PROFILE_COUNT] = {
     //  name     colour   cur    brake  km/h    W        app_mode

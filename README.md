@@ -95,6 +95,7 @@ The dash talks to the VESC over one of two links, chosen at build time:
 | Extra hardware | TJA1050 transceiver | none - straight to the VESC's COMM port |
 | Telemetry | CAN status broadcasts, plus a one-frame poll for the fault code | polled at 10 Hz |
 | PAS | yes | no - see [UART](#uart) |
+| Profile limits (drive/regen current, top speed, power) | yes | yes |
 | Profile `app_mode` switching | any mode | throttle on/off only |
 | Dash's own config reads/writes while VESC Tool is connected | yes | held off until it disconnects |
 
@@ -162,10 +163,12 @@ UART gives up two things compared with CAN, both forced by the VESC firmware:
   `PPM and UART` or `ADC and UART`, and the firmware's PAS inputs sit on that same port's
   RX/TX pins by default. A UART build **won't compile** if any profile uses
   `APP_MODE_PAS` or `APP_MODE_ADC_PAS` - see [Rider profiles](#rider-profiles).
-* **Profiles only turn the throttle on or off.** Every mode a profile can name would
-  stop the UART the dash is talking over if written as-is, so a UART build writes the app
-  that gives the same input with the UART still running: `APP_MODE_ADC` (throttle on)
-  becomes `ADC and UART`, and `APP_MODE_NONE` (throttle off) becomes `UART`. In
+* **A profile's input mode is limited to throttle on or off.** Its limits work exactly
+  as they do over CAN - drive current, regen current, top speed and battery power. Only
+  `app_mode`, the choice of which rider input is live, is narrower. Every mode a profile
+  can name would stop the UART the dash is talking over if written as-is, so a UART build
+  writes the app that gives the same input with the UART still running: `APP_MODE_ADC`
+  (throttle on) becomes `ADC and UART`, and `APP_MODE_NONE` (throttle off) becomes `UART`. In
   `ADC and UART` the ADC app can't put its cruise/reverse buttons on the COMM port's
   RX/TX pins (they are the UART); it reads one button on the servo/PPM pin instead.
 
@@ -426,9 +429,10 @@ flash across dash power cycles.
 `APP_MODE_ADC_PAS` (both). Think hard before giving a profile you might select while
 riding `APP_MODE_NONE`.
 
-The UART table has the same five profiles with `APP_MODE_ADC` in place of the PAS modes,
-since UART can only turn the throttle on (`APP_MODE_ADC`) or off (`APP_MODE_NONE`) - see
-[UART](#uart). A `static_assert` fails the build if a PAS mode is put in it.
+The UART table has the same five profiles, with the same current, regen, speed and power
+limits, but `APP_MODE_ADC` in place of the PAS modes: over UART, `app_mode` can only be
+throttle on (`APP_MODE_ADC`) or off (`APP_MODE_NONE`) - see [UART](#uart). A
+`static_assert` fails the build if a PAS mode is put in it.
 
 Selecting a profile sends two commands, both RAM-only:
 
