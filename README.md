@@ -148,8 +148,8 @@ board TX -> TJA1050 `TXD`, board RX <- TJA1050 `RXD`, TJA1050 `VCC` -> 5V, `GND`
 
 Then wire the TJA1050's `CANH`/`CANL` to the VESC's CAN port (twisted pair if the run is
 long). The bus needs **120 Ω termination at each end** - most single-VESC setups are
-already terminated inside the VESC, so add the second 120 Ω resistor across `CANH`/
-`CANL` at the dash end.
+already terminated inside the VESC. Most TJA1050 breakout boards also have the 120 Ω resistor.
+Add the 120 Ω resistor(s) as necessary.
 
 ### UART
 
